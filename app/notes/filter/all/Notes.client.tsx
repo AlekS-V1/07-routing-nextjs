@@ -18,7 +18,6 @@ const NotesClient = () => {
   const perPage = 12;
   // Стан для зберігання пошуку
   const [searchQuery, setSearchQuery] = useState('');
-
   const { data } = useQuery({
     queryKey: ['notes', searchQuery, currentPage, perPage],
     queryFn: () => fetchNotes(searchQuery, currentPage, perPage),

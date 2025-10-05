@@ -15,12 +15,13 @@ const NotesPage = async ({
 
   const search = params.search ?? '';
   const page = Number(params.page ?? '1');
-  const perPage = 12;
+  const perPage = 10;
 
   await queryClient.prefetchQuery({
     queryKey: ['notes', search, page, perPage],
     queryFn: () => fetchNotes(search, page, perPage),
   });
+
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <NotesClient />

@@ -56,3 +56,26 @@ export async function deleteNote(noteId: string) {
     },
   });
 }
+
+export async function fetchNotesByTags(params: {
+  tag?: string;
+  search?: string;
+  page?: number;
+  perPage?: number;
+}): Promise<notesHttpResponse> {
+  const response = await axios.get('/notes', {
+    params: {
+      tag: params.tag,
+      search: params.search ?? '',
+      page: params.page ?? 1,
+      perPage: params.perPage ?? 12,
+    },
+
+    headers: {
+      accept: 'application/json',
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+    },
+  });
+
+  return response.data;
+}
