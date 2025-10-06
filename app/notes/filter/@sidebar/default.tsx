@@ -1,11 +1,6 @@
 import Link from 'next/link';
 import css from './SidebarNotes.module.css';
 import { NoteTag } from '@/types/note';
-// import { fetchNotes, fetchNotesByTags } from '@/lib/api';
-
-// interface TagsMenuProps {
-//   tags: NoteTag[];
-// }
 
 const NotesSidebar = async () => {
   const staticTags: NoteTag[] = [
@@ -16,10 +11,6 @@ const NotesSidebar = async () => {
     'Meeting',
     'Shopping',
   ];
-  //   const notes = await fetchNotes();
-  //   const tags = notes.notes;
-  console.log(staticTags);
-
   return (
     <ul className={css.menuList}>
       {Array.isArray(staticTags) &&
