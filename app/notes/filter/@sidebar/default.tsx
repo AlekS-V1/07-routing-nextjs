@@ -2,15 +2,16 @@ import Link from 'next/link';
 import css from './SidebarNotes.module.css';
 import { NoteTag } from '@/types/note';
 
+const staticTags: NoteTag[] = [
+  'All',
+  'Todo',
+  'Work',
+  'Personal',
+  'Meeting',
+  'Shopping',
+];
+
 const NotesSidebar = async () => {
-  const staticTags: NoteTag[] = [
-    'All',
-    'Todo',
-    'Work',
-    'Personal',
-    'Meeting',
-    'Shopping',
-  ];
   return (
     <ul className={css.menuList}>
       {Array.isArray(staticTags) &&

@@ -40,16 +40,15 @@ export default function Modal({ children, onClose }: ModalProps) {
       aria-modal="true"
     >
       <div className={css.modal}>
-        <button
+        {/* <button
           className={css.closeButton}
           onClick={onClose}
           aria-label="Close modal"
         >
           &times;
-        </button>
+        </button> */}
 
         {children}
-        {/* */}
       </div>
     </div>,
     document.body

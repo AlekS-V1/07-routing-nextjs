@@ -4,11 +4,9 @@ import css from './TagsMenu.module.css';
 import { useState } from 'react';
 import { NoteTag } from '@/types/note';
 
-interface TagsMenuProps {
-  tags: NoteTag[];
-}
+const tags: NoteTag[] = ['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'];
 
-const TagsMenu = ({ tags }: TagsMenuProps) => {
+const TagsMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
 

@@ -1,15 +1,6 @@
 import TagsMenu from '../TagsMenu/TagsMenu';
 import css from './Header.module.css';
 import Link from 'next/link';
-import { NoteTag } from '@/types/note';
-
-const staticTags: NoteTag[] = [
-  'Todo',
-  'Work',
-  'Personal',
-  'Meeting',
-  'Shopping',
-];
 
 const Header = () => {
   return (
@@ -23,7 +14,7 @@ const Header = () => {
             <Link href="/">Home</Link>
           </li>
           <li>
-            <TagsMenu tags={staticTags} />
+            <TagsMenu />
           </li>
         </ul>
       </nav>

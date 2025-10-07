@@ -1,5 +1,10 @@
-import NoteList from '@/components/NoteList/NoteList';
-import { fetchNotesByTags } from '@/lib/api';
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from '@tanstack/react-query';
+import NotesClient from './Notes.client';
+import { fetchNotes } from '@/lib/api';
 import { NoteTag } from '@/types/note';
 import { notFound } from 'next/navigation';
 
@@ -12,31 +17,33 @@ const staticTags: NoteTag[] = [
   'Shopping',
 ];
 
-export default async function NotesPage({
+const NotesPage = async ({
   params,
 }: {
-  params: { slug?: string[] };
-}) {
+  params: { slug?: string[]; search: string; page: string; tag: string };
+}) => {
   const resolvedParams = await params;
   const tag = resolvedParams.slug?.[0] ?? 'All';
 
   const isValidTag = tag === 'All' || staticTags.includes(tag as NoteTag);
   if (!isValidTag) notFound();
 
-  const response = await fetchNotesByTags({
-    tag: tag !== 'All' ? tag : undefined,
-    page: 1,
-    perPage: 12,
+  const queryClient = new QueryClient();
+
+  const search = params.search ?? '';
+  const page = Number(params.page ?? '1');
+  const perPage = 10;
+
+  await queryClient.prefetchQuery({
+    queryKey: ['notes', search, page, perPage, tag],
+    queryFn: () => fetchNotes(search, page, perPage, tag),
   });
 
   return (
-    <main>
-      <h1>{tag === 'All' ? 'All Notes' : `Notes tagged: ${tag}`}</h1>
-      {response.notes.length > 0 ? (
-        <NoteList notes={response.notes} />
-      ) : (
-        <p>No notes found for tag: {tag}</p>
-      )}
-    </main>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <NotesClient tag={tag} />
+    </HydrationBoundary>
   );
-}
+};
+
+export default NotesPage;

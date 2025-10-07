@@ -9,18 +9,17 @@ import { useState } from 'react';
 import { useDebouncedCallback } from 'use-debounce';
 import Modal from '@/components/Modal/Modal';
 import NoteForm from '@/components/NoteForm/NoteForm';
-
 import css from './Notes.module.css';
 
-const NotesClient = () => {
+const NotesClient = ({ tag }: { tag?: string }) => {
   // Стан для зберігання поточної сторінки
   const [currentPage, setCurrentPage] = useState(1);
   const perPage = 12;
   // Стан для зберігання пошуку
   const [searchQuery, setSearchQuery] = useState('');
   const { data } = useQuery({
-    queryKey: ['notes', searchQuery, currentPage, perPage],
-    queryFn: () => fetchNotes(searchQuery, currentPage, perPage),
+    queryKey: ['notes', searchQuery, currentPage, perPage, tag],
+    queryFn: () => fetchNotes(searchQuery, currentPage, perPage, tag),
     placeholderData: keepPreviousData,
     refetchOnMount: false,
   });
