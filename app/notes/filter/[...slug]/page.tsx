@@ -20,7 +20,7 @@ const staticTags: NoteTag[] = [
 const NotesPage = async ({
   params,
 }: {
-  params: { slug?: string[]; search: string; page: string; tag: string };
+  params: Promise<{ slug: string[] }>;
 }) => {
   const resolvedParams = await params;
   const tag = resolvedParams.slug?.[0] ?? 'All';
@@ -29,9 +29,8 @@ const NotesPage = async ({
   if (!isValidTag) notFound();
 
   const queryClient = new QueryClient();
-
-  const search = params.search ?? '';
-  const page = Number(params.page ?? '1');
+  const search = '';
+  const page = 1;
   const perPage = 10;
 
   await queryClient.prefetchQuery({

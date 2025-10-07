@@ -54,31 +54,11 @@ export async function createNote(data: NewFormNote) {
 }
 
 export async function deleteNote(noteId: string) {
-  await axios.delete<Note>(`/notes/${noteId}`, {
+  const response = await axios.delete<Note>(`/notes/${noteId}`, {
     headers: {
       accept: 'application/json',
       Authorization: `Bearer ${sui}`,
     },
   });
-}
-
-export async function fetchNotesByTags(params: {
-  search?: string;
-  page?: number;
-  perPage?: number;
-}): Promise<notesHttpResponse> {
-  const response = await axios.get('/notes', {
-    params: {
-      search: params.search ?? '',
-      page: params.page ?? 1,
-      perPage: params.perPage ?? 12,
-    },
-
-    headers: {
-      accept: 'application/json',
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
-    },
-  });
-
   return response.data;
 }
